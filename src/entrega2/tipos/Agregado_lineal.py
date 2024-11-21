@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, TypeVar , Generic
+from typing import List, TypeVar , Generic , Callable, Optional
 from abc import  abstractmethod
 
 
@@ -36,12 +36,19 @@ class Agregado_lineal(Generic[E]):
     def remove_all(self) -> List[E]:
         removed_elements = self._elements[:]
         self._elements.clear()
-        return removed_elements
+        return removed_elements  
+    
+    ## Desde aqui he modificado el codigo para el examen 
+    def contains(self, e: E) -> bool:
+        return e in self._elements
 
-        
-    
-    
-        
-        
-        
+    def find(self, func: Callable[[E], bool]) -> Optional[E]:
+        for element in self._elements:
+            if func(element):
+                return element
+        return None
+
+    def filter(self, func: Callable[[E], bool]) -> List[E]:
+        return [element for element in self._elements if func(element)]
+
     
