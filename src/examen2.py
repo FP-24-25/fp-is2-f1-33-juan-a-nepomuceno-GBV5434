@@ -1,30 +1,26 @@
-
-
-# Examen 2
 from entrega2.tipos.Agregado_lineal import Agregado_lineal, E
 
 class ColaConLimite(Agregado_lineal[E]):
     def __init__(self, capacidad: int):
         super().__init__()
         self.capacidad = capacidad
-        self.elementos = []
 
     def add(self, e: E) -> None:
         if self.is_full():
             raise OverflowError('La cola está llena')
-        self.elementos.append(e)
-      
+        self._elements.append(e)
+
     def remove(self) -> E:
-        if not self.elementos:
+        if not self._elements:
             raise IndexError('La cola está vacía')
-        return self.elementos.pop(0)
-        
+        return self._elements.pop(0)
+
     @classmethod
     def of(cls, capacidad: int) -> "ColaConLimite":
         return cls(capacidad)
 
     def is_full(self) -> bool:
-        return len(self.elementos) >= self.capacidad
+        return len(self._elements) >= self.capacidad
 
 def test_cola_con_limite():
     cola = ColaConLimite.of(3)
@@ -44,19 +40,12 @@ def test_cola_con_limite2():
     cola.add("Tarea 2")
     cola.add("Tarea 3")
     cola.add("Tarea 4")
-    
 
     try:
         cola.add("Tarea 6")
     except OverflowError as e:
         print(e)
     print(cola.remove())
-
-
-#Problema 2 
-# Modificque el codigo en directamente en Agredado Lineal:
- 
-#Aqui Hare las pruebas de las funciones que he agregado:
 
 def test_contains():
     agregado = Agregado_lineal[int]()
@@ -81,7 +70,6 @@ def test_filter():
     print("\nPrueba de filter:")
     print(f"Filtrar números pares: {agregado.filter(lambda x: x % 2 == 0)}")  # Debe ser [2, 4]
 
-
 if __name__ == '__main__':
     print("Cuando la cola esta llena:\n")
     test_cola_con_limite()
@@ -92,4 +80,4 @@ if __name__ == '__main__':
     test_contains()
     test_find()
     test_filter()
-    
+
